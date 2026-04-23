@@ -5413,7 +5413,6 @@ fi
     unset ax_saved_LIBS
     unset ax_saved_CPPFLAGS
 
-
   if test "x$ax_cv_curses" != xyes
 then :
 
@@ -5431,14 +5430,9 @@ else
 
 printf "%s\n" "#define IO_STDIO 1" >>confdefs.h
 
-  LIBS=""
 fi
 
 ac_config_headers="$ac_config_headers config.h"
-
-
-
-
 
 ac_config_files="$ac_config_files Makefile src/Makefile"
 

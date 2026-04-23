@@ -1,4 +1,4 @@
-AC_INIT([Omni2048], [0.3], [])
+AC_INIT([Omni2048], [v0.3.1], [])
 AC_CONFIG_MACRO_DIRS([m4])
 AM_INIT_AUTOMAKE([foreign -Wall -Werror])
 PKG_PROG_PKG_CONFIG
