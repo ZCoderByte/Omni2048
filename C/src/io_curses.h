@@ -30,6 +30,12 @@ typedef struct display_struct display_t;
 
 #define updating_display(display) (display.frames)
 
+/*
+Defines a dummy macro for set_escdelay when compiling for Windows.
+*/
+#ifdef _WIN32
+#define set_escdelay(ms)
+#endif
 
 /*
 Sets up curses and the terminal.  Also sets up color when availible.

@@ -1,0 +1,7 @@
+bin_PROGRAMS = omni2048
+omni2048_SOURCES = main.c
+
+if IO_CURSES
+omni2048_CFLAGS = @CURSES_CFLAGS@
+omni2048_LDADD = @CURSES_LIBS@
+endif

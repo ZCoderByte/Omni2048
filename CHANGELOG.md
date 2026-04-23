@@ -1,3 +1,13 @@
+## [Unreleased] - 2026-XX-XX
+### Changed
+- Changed the representation of tile values from one byte encoding powers of 2 over to unsigned 32 bit integers.  This makes code simpler and easier to understand.
+
+##[0.3.1] - 2026-04-22
+### Added
+- A proper autotools based build system.
+### Changed
+- Added a temporary hack to ensure the C version compiles for Windows with PDCurses.  Will replace this with a better, more comprehensive fix later.
+
 ## [0.3.0] - 2026-04-12
 ### Added
 - A readme, changelog, and specification document.
@@ -15,4 +25,4 @@
 ### Added
 - Initial C version.
 - Basic stdio input/output backend.
-- Basic Curses/Ncurses backend.
+- Basic Curses/Ncurses/PDcurses backend.

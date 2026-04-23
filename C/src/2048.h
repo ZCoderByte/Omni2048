@@ -40,10 +40,14 @@ unsigned int game_over(const unsigned char board[4][4]);
 void update_state(state_t* gamestate, unsigned int input);
 
 
-#if defined IO_STDIO
-#include "io_stdio.h"
-#elif defined IO_CURSES
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
+#if defined IO_CURSES
 #include "io_curses.h"
+#else
+#include "io_stdio.h"
 #endif
 
 
