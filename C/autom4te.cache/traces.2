@@ -355,172 +355,296 @@ m4trace:configure.ac:5: -1- AC_SUBST_TRACE([am__fastdepCC_FALSE])
 m4trace:configure.ac:5: -1- m4_pattern_allow([^am__fastdepCC_FALSE$])
 m4trace:configure.ac:5: -1- _AM_SUBST_NOTMAKE([am__fastdepCC_TRUE])
 m4trace:configure.ac:5: -1- _AM_SUBST_NOTMAKE([am__fastdepCC_FALSE])
-m4trace:configure.ac:12: -1- AM_CONDITIONAL([IO_CURSES], [test "x$enable_io_curses" = "xyes"])
-m4trace:configure.ac:12: -1- AC_SUBST([IO_CURSES_TRUE])
-m4trace:configure.ac:12: -1- AC_SUBST_TRACE([IO_CURSES_TRUE])
-m4trace:configure.ac:12: -1- m4_pattern_allow([^IO_CURSES_TRUE$])
-m4trace:configure.ac:12: -1- AC_SUBST([IO_CURSES_FALSE])
-m4trace:configure.ac:12: -1- AC_SUBST_TRACE([IO_CURSES_FALSE])
-m4trace:configure.ac:12: -1- m4_pattern_allow([^IO_CURSES_FALSE$])
-m4trace:configure.ac:12: -1- _AM_SUBST_NOTMAKE([IO_CURSES_TRUE])
-m4trace:configure.ac:12: -1- _AM_SUBST_NOTMAKE([IO_CURSES_FALSE])
-m4trace:configure.ac:15: -1- AC_SUBST([CURSES_LIBS])
-m4trace:configure.ac:15: -1- AC_SUBST_TRACE([CURSES_LIBS])
-m4trace:configure.ac:15: -1- m4_pattern_allow([^CURSES_LIBS$])
-m4trace:configure.ac:15: -1- AC_SUBST([CURSES_CFLAGS])
-m4trace:configure.ac:15: -1- AC_SUBST_TRACE([CURSES_CFLAGS])
-m4trace:configure.ac:15: -1- m4_pattern_allow([^CURSES_CFLAGS$])
-m4trace:configure.ac:15: -1- AC_DEFINE_TRACE_LITERAL([HAVE_NCURSESW])
-m4trace:configure.ac:15: -1- m4_pattern_allow([^HAVE_NCURSESW$])
-m4trace:configure.ac:15: -1- AH_OUTPUT([HAVE_NCURSESW], [/* Define to 1 if the NcursesW library is present */
+m4trace:configure.ac:17: -1- AM_CONDITIONAL([IO_CURSES], [test "x$with_curses" != "xno" -a "x$with_curses" != "x"])
+m4trace:configure.ac:17: -1- AC_SUBST([IO_CURSES_TRUE])
+m4trace:configure.ac:17: -1- AC_SUBST_TRACE([IO_CURSES_TRUE])
+m4trace:configure.ac:17: -1- m4_pattern_allow([^IO_CURSES_TRUE$])
+m4trace:configure.ac:17: -1- AC_SUBST([IO_CURSES_FALSE])
+m4trace:configure.ac:17: -1- AC_SUBST_TRACE([IO_CURSES_FALSE])
+m4trace:configure.ac:17: -1- m4_pattern_allow([^IO_CURSES_FALSE$])
+m4trace:configure.ac:17: -1- _AM_SUBST_NOTMAKE([IO_CURSES_TRUE])
+m4trace:configure.ac:17: -1- _AM_SUBST_NOTMAKE([IO_CURSES_FALSE])
+m4trace:configure.ac:36: -1- AC_SUBST([CURSES_LIBS])
+m4trace:configure.ac:36: -1- AC_SUBST_TRACE([CURSES_LIBS])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^CURSES_LIBS$])
+m4trace:configure.ac:36: -1- AC_SUBST([CURSES_CFLAGS])
+m4trace:configure.ac:36: -1- AC_SUBST_TRACE([CURSES_CFLAGS])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^CURSES_CFLAGS$])
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_NCURSESW])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_NCURSESW$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_NCURSESW], [/* Define to 1 if the NcursesW library is present */
 @%:@undef HAVE_NCURSESW])
-m4trace:configure.ac:15: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES])
-m4trace:configure.ac:15: -1- m4_pattern_allow([^HAVE_CURSES$])
-m4trace:configure.ac:15: -1- AH_OUTPUT([HAVE_CURSES], [/* Define to 1 if a SysV or X/Open compatible Curses library is present */
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_CURSES$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_CURSES], [/* Define to 1 if a SysV or X/Open compatible Curses library is present */
 @%:@undef HAVE_CURSES])
-m4trace:configure.ac:15: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_ENHANCED])
-m4trace:configure.ac:15: -1- m4_pattern_allow([^HAVE_CURSES_ENHANCED$])
-m4trace:configure.ac:15: -1- AH_OUTPUT([HAVE_CURSES_ENHANCED], [/* Define to 1 if library supports X/Open Enhanced functions */
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_ENHANCED])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_CURSES_ENHANCED$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_CURSES_ENHANCED], [/* Define to 1 if library supports X/Open Enhanced functions */
 @%:@undef HAVE_CURSES_ENHANCED])
-m4trace:configure.ac:15: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_COLOR])
-m4trace:configure.ac:15: -1- m4_pattern_allow([^HAVE_CURSES_COLOR$])
-m4trace:configure.ac:15: -1- AH_OUTPUT([HAVE_CURSES_COLOR], [/* Define to 1 if library supports color (enhanced functions) */
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_COLOR])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_CURSES_COLOR$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_CURSES_COLOR], [/* Define to 1 if library supports color (enhanced functions) */
 @%:@undef HAVE_CURSES_COLOR])
-m4trace:configure.ac:15: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_OBSOLETE])
-m4trace:configure.ac:15: -1- m4_pattern_allow([^HAVE_CURSES_OBSOLETE$])
-m4trace:configure.ac:15: -1- AH_OUTPUT([HAVE_CURSES_OBSOLETE], [/* Define to 1 if library supports certain obsolete features */
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_OBSOLETE])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_CURSES_OBSOLETE$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_CURSES_OBSOLETE], [/* Define to 1 if library supports certain obsolete features */
 @%:@undef HAVE_CURSES_OBSOLETE])
-m4trace:configure.ac:15: -1- AC_DEFINE_TRACE_LITERAL([HAVE_NCURSESW_CURSES_H])
-m4trace:configure.ac:15: -1- m4_pattern_allow([^HAVE_NCURSESW_CURSES_H$])
-m4trace:configure.ac:15: -1- AH_OUTPUT([HAVE_NCURSESW_CURSES_H], [/* Define to 1 if <ncursesw/curses.h> is present */
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_NCURSESW_CURSES_H])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_NCURSESW_CURSES_H$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_NCURSESW_CURSES_H], [/* Define to 1 if <ncursesw/curses.h> is present */
 @%:@undef HAVE_NCURSESW_CURSES_H])
-m4trace:configure.ac:15: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_ENHANCED])
-m4trace:configure.ac:15: -1- m4_pattern_allow([^HAVE_CURSES_ENHANCED$])
-m4trace:configure.ac:15: -1- AH_OUTPUT([HAVE_CURSES_ENHANCED], [/* Define to 1 if library supports X/Open Enhanced functions */
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_ENHANCED])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_CURSES_ENHANCED$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_CURSES_ENHANCED], [/* Define to 1 if library supports X/Open Enhanced functions */
 @%:@undef HAVE_CURSES_ENHANCED])
-m4trace:configure.ac:15: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_COLOR])
-m4trace:configure.ac:15: -1- m4_pattern_allow([^HAVE_CURSES_COLOR$])
-m4trace:configure.ac:15: -1- AH_OUTPUT([HAVE_CURSES_COLOR], [/* Define to 1 if library supports color (enhanced functions) */
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_COLOR])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_CURSES_COLOR$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_CURSES_COLOR], [/* Define to 1 if library supports color (enhanced functions) */
 @%:@undef HAVE_CURSES_COLOR])
-m4trace:configure.ac:15: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_OBSOLETE])
-m4trace:configure.ac:15: -1- m4_pattern_allow([^HAVE_CURSES_OBSOLETE$])
-m4trace:configure.ac:15: -1- AH_OUTPUT([HAVE_CURSES_OBSOLETE], [/* Define to 1 if library supports certain obsolete features */
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_OBSOLETE])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_CURSES_OBSOLETE$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_CURSES_OBSOLETE], [/* Define to 1 if library supports certain obsolete features */
 @%:@undef HAVE_CURSES_OBSOLETE])
-m4trace:configure.ac:15: -1- AC_DEFINE_TRACE_LITERAL([HAVE_NCURSESW_H])
-m4trace:configure.ac:15: -1- m4_pattern_allow([^HAVE_NCURSESW_H$])
-m4trace:configure.ac:15: -1- AH_OUTPUT([HAVE_NCURSESW_H], [/* Define to 1 if <ncursesw.h> is present */
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_NCURSESW_H])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_NCURSESW_H$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_NCURSESW_H], [/* Define to 1 if <ncursesw.h> is present */
 @%:@undef HAVE_NCURSESW_H])
-m4trace:configure.ac:15: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_ENHANCED])
-m4trace:configure.ac:15: -1- m4_pattern_allow([^HAVE_CURSES_ENHANCED$])
-m4trace:configure.ac:15: -1- AH_OUTPUT([HAVE_CURSES_ENHANCED], [/* Define to 1 if library supports X/Open Enhanced functions */
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_ENHANCED])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_CURSES_ENHANCED$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_CURSES_ENHANCED], [/* Define to 1 if library supports X/Open Enhanced functions */
 @%:@undef HAVE_CURSES_ENHANCED])
-m4trace:configure.ac:15: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_COLOR])
-m4trace:configure.ac:15: -1- m4_pattern_allow([^HAVE_CURSES_COLOR$])
-m4trace:configure.ac:15: -1- AH_OUTPUT([HAVE_CURSES_COLOR], [/* Define to 1 if library supports color (enhanced functions) */
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_COLOR])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_CURSES_COLOR$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_CURSES_COLOR], [/* Define to 1 if library supports color (enhanced functions) */
 @%:@undef HAVE_CURSES_COLOR])
-m4trace:configure.ac:15: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_OBSOLETE])
-m4trace:configure.ac:15: -1- m4_pattern_allow([^HAVE_CURSES_OBSOLETE$])
-m4trace:configure.ac:15: -1- AH_OUTPUT([HAVE_CURSES_OBSOLETE], [/* Define to 1 if library supports certain obsolete features */
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_OBSOLETE])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_CURSES_OBSOLETE$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_CURSES_OBSOLETE], [/* Define to 1 if library supports certain obsolete features */
 @%:@undef HAVE_CURSES_OBSOLETE])
-m4trace:configure.ac:15: -1- AC_DEFINE_TRACE_LITERAL([HAVE_NCURSES_H])
-m4trace:configure.ac:15: -1- m4_pattern_allow([^HAVE_NCURSES_H$])
-m4trace:configure.ac:15: -1- AH_OUTPUT([HAVE_NCURSES_H], [/* Define to 1 if <ncurses.h> is present */
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_NCURSES_H])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_NCURSES_H$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_NCURSES_H], [/* Define to 1 if <ncurses.h> is present */
 @%:@undef HAVE_NCURSES_H])
-m4trace:configure.ac:15: -1- AC_DEFINE_TRACE_LITERAL([HAVE_NCURSES])
-m4trace:configure.ac:15: -1- m4_pattern_allow([^HAVE_NCURSES$])
-m4trace:configure.ac:15: -1- AH_OUTPUT([HAVE_NCURSES], [/* Define to 1 if the Ncurses library is present */
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_NCURSES])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_NCURSES$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_NCURSES], [/* Define to 1 if the Ncurses library is present */
 @%:@undef HAVE_NCURSES])
-m4trace:configure.ac:15: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES])
-m4trace:configure.ac:15: -1- m4_pattern_allow([^HAVE_CURSES$])
-m4trace:configure.ac:15: -1- AH_OUTPUT([HAVE_CURSES], [/* Define to 1 if a SysV or X/Open compatible Curses library is present */
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_CURSES$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_CURSES], [/* Define to 1 if a SysV or X/Open compatible Curses library is present */
 @%:@undef HAVE_CURSES])
-m4trace:configure.ac:15: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_COLOR])
-m4trace:configure.ac:15: -1- m4_pattern_allow([^HAVE_CURSES_COLOR$])
-m4trace:configure.ac:15: -1- AH_OUTPUT([HAVE_CURSES_COLOR], [/* Define to 1 if library supports color (enhanced functions) */
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_COLOR])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_CURSES_COLOR$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_CURSES_COLOR], [/* Define to 1 if library supports color (enhanced functions) */
 @%:@undef HAVE_CURSES_COLOR])
-m4trace:configure.ac:15: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_OBSOLETE])
-m4trace:configure.ac:15: -1- m4_pattern_allow([^HAVE_CURSES_OBSOLETE$])
-m4trace:configure.ac:15: -1- AH_OUTPUT([HAVE_CURSES_OBSOLETE], [/* Define to 1 if library supports certain obsolete features */
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_OBSOLETE])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_CURSES_OBSOLETE$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_CURSES_OBSOLETE], [/* Define to 1 if library supports certain obsolete features */
 @%:@undef HAVE_CURSES_OBSOLETE])
-m4trace:configure.ac:15: -1- AC_DEFINE_TRACE_LITERAL([HAVE_NCURSES_CURSES_H])
-m4trace:configure.ac:15: -1- m4_pattern_allow([^HAVE_NCURSES_CURSES_H$])
-m4trace:configure.ac:15: -1- AH_OUTPUT([HAVE_NCURSES_CURSES_H], [/* Define to 1 if <ncurses/curses.h> is present */
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_NCURSES_CURSES_H])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_NCURSES_CURSES_H$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_NCURSES_CURSES_H], [/* Define to 1 if <ncurses/curses.h> is present */
 @%:@undef HAVE_NCURSES_CURSES_H])
-m4trace:configure.ac:15: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_COLOR])
-m4trace:configure.ac:15: -1- m4_pattern_allow([^HAVE_CURSES_COLOR$])
-m4trace:configure.ac:15: -1- AH_OUTPUT([HAVE_CURSES_COLOR], [/* Define to 1 if library supports color (enhanced functions) */
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_COLOR])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_CURSES_COLOR$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_CURSES_COLOR], [/* Define to 1 if library supports color (enhanced functions) */
 @%:@undef HAVE_CURSES_COLOR])
-m4trace:configure.ac:15: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_OBSOLETE])
-m4trace:configure.ac:15: -1- m4_pattern_allow([^HAVE_CURSES_OBSOLETE$])
-m4trace:configure.ac:15: -1- AH_OUTPUT([HAVE_CURSES_OBSOLETE], [/* Define to 1 if library supports certain obsolete features */
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_OBSOLETE])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_CURSES_OBSOLETE$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_CURSES_OBSOLETE], [/* Define to 1 if library supports certain obsolete features */
 @%:@undef HAVE_CURSES_OBSOLETE])
-m4trace:configure.ac:15: -1- AC_DEFINE_TRACE_LITERAL([HAVE_NCURSES_H])
-m4trace:configure.ac:15: -1- m4_pattern_allow([^HAVE_NCURSES_H$])
-m4trace:configure.ac:15: -1- AH_OUTPUT([HAVE_NCURSES_H], [/* Define to 1 if <ncurses.h> is present */
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_NCURSES_H])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_NCURSES_H$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_NCURSES_H], [/* Define to 1 if <ncurses.h> is present */
 @%:@undef HAVE_NCURSES_H])
-m4trace:configure.ac:15: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES])
-m4trace:configure.ac:15: -1- m4_pattern_allow([^HAVE_CURSES$])
-m4trace:configure.ac:15: -1- AH_OUTPUT([HAVE_CURSES], [/* Define to 1 if a SysV or X/Open compatible Curses library is present */
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_CURSES$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_CURSES], [/* Define to 1 if a SysV or X/Open compatible Curses library is present */
 @%:@undef HAVE_CURSES])
-m4trace:configure.ac:15: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_H])
-m4trace:configure.ac:15: -1- m4_pattern_allow([^HAVE_CURSES_H$])
-m4trace:configure.ac:15: -1- AH_OUTPUT([HAVE_CURSES_H], [/* Define to 1 if <curses.h> is present */
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_H])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_CURSES_H$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_CURSES_H], [/* Define to 1 if <curses.h> is present */
 @%:@undef HAVE_CURSES_H])
-m4trace:configure.ac:15: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_ENHANCED])
-m4trace:configure.ac:15: -1- m4_pattern_allow([^HAVE_CURSES_ENHANCED$])
-m4trace:configure.ac:15: -1- AH_OUTPUT([HAVE_CURSES_ENHANCED], [/* Define to 1 if library supports X/Open Enhanced functions */
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_ENHANCED])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_CURSES_ENHANCED$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_CURSES_ENHANCED], [/* Define to 1 if library supports X/Open Enhanced functions */
 @%:@undef HAVE_CURSES_ENHANCED])
-m4trace:configure.ac:15: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_COLOR])
-m4trace:configure.ac:15: -1- m4_pattern_allow([^HAVE_CURSES_COLOR$])
-m4trace:configure.ac:15: -1- AH_OUTPUT([HAVE_CURSES_COLOR], [/* Define to 1 if library supports color (enhanced functions) */
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_COLOR])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_CURSES_COLOR$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_CURSES_COLOR], [/* Define to 1 if library supports color (enhanced functions) */
 @%:@undef HAVE_CURSES_COLOR])
-m4trace:configure.ac:15: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_COLOR])
-m4trace:configure.ac:15: -1- m4_pattern_allow([^HAVE_CURSES_COLOR$])
-m4trace:configure.ac:15: -1- AH_OUTPUT([HAVE_CURSES_COLOR], [/* Define to 1 if library supports color (enhanced functions) */
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_COLOR])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_CURSES_COLOR$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_CURSES_COLOR], [/* Define to 1 if library supports color (enhanced functions) */
 @%:@undef HAVE_CURSES_COLOR])
-m4trace:configure.ac:15: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_OBSOLETE])
-m4trace:configure.ac:15: -1- m4_pattern_allow([^HAVE_CURSES_OBSOLETE$])
-m4trace:configure.ac:15: -1- AH_OUTPUT([HAVE_CURSES_OBSOLETE], [/* Define to 1 if library supports certain obsolete features */
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_OBSOLETE])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_CURSES_OBSOLETE$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_CURSES_OBSOLETE], [/* Define to 1 if library supports certain obsolete features */
 @%:@undef HAVE_CURSES_OBSOLETE])
-m4trace:configure.ac:20: -1- AC_DEFINE_TRACE_LITERAL([IO_CURSES])
-m4trace:configure.ac:20: -1- m4_pattern_allow([^IO_CURSES$])
-m4trace:configure.ac:20: -1- AH_OUTPUT([IO_CURSES], [/* Define if using a curses implementation as the I/O system. */
+m4trace:configure.ac:36: -1- AC_SUBST([CURSES_LIBS])
+m4trace:configure.ac:36: -1- AC_SUBST_TRACE([CURSES_LIBS])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^CURSES_LIBS$])
+m4trace:configure.ac:36: -1- AC_SUBST([CURSES_CFLAGS])
+m4trace:configure.ac:36: -1- AC_SUBST_TRACE([CURSES_CFLAGS])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^CURSES_CFLAGS$])
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_NCURSESW])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_NCURSESW$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_NCURSESW], [/* Define to 1 if the NcursesW library is present */
+@%:@undef HAVE_NCURSESW])
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_CURSES$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_CURSES], [/* Define to 1 if a SysV or X/Open compatible Curses library is present */
+@%:@undef HAVE_CURSES])
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_ENHANCED])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_CURSES_ENHANCED$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_CURSES_ENHANCED], [/* Define to 1 if library supports X/Open Enhanced functions */
+@%:@undef HAVE_CURSES_ENHANCED])
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_COLOR])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_CURSES_COLOR$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_CURSES_COLOR], [/* Define to 1 if library supports color (enhanced functions) */
+@%:@undef HAVE_CURSES_COLOR])
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_OBSOLETE])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_CURSES_OBSOLETE$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_CURSES_OBSOLETE], [/* Define to 1 if library supports certain obsolete features */
+@%:@undef HAVE_CURSES_OBSOLETE])
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_NCURSESW_CURSES_H])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_NCURSESW_CURSES_H$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_NCURSESW_CURSES_H], [/* Define to 1 if <ncursesw/curses.h> is present */
+@%:@undef HAVE_NCURSESW_CURSES_H])
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_ENHANCED])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_CURSES_ENHANCED$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_CURSES_ENHANCED], [/* Define to 1 if library supports X/Open Enhanced functions */
+@%:@undef HAVE_CURSES_ENHANCED])
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_COLOR])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_CURSES_COLOR$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_CURSES_COLOR], [/* Define to 1 if library supports color (enhanced functions) */
+@%:@undef HAVE_CURSES_COLOR])
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_OBSOLETE])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_CURSES_OBSOLETE$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_CURSES_OBSOLETE], [/* Define to 1 if library supports certain obsolete features */
+@%:@undef HAVE_CURSES_OBSOLETE])
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_NCURSESW_H])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_NCURSESW_H$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_NCURSESW_H], [/* Define to 1 if <ncursesw.h> is present */
+@%:@undef HAVE_NCURSESW_H])
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_ENHANCED])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_CURSES_ENHANCED$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_CURSES_ENHANCED], [/* Define to 1 if library supports X/Open Enhanced functions */
+@%:@undef HAVE_CURSES_ENHANCED])
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_COLOR])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_CURSES_COLOR$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_CURSES_COLOR], [/* Define to 1 if library supports color (enhanced functions) */
+@%:@undef HAVE_CURSES_COLOR])
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_OBSOLETE])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_CURSES_OBSOLETE$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_CURSES_OBSOLETE], [/* Define to 1 if library supports certain obsolete features */
+@%:@undef HAVE_CURSES_OBSOLETE])
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_NCURSES_H])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_NCURSES_H$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_NCURSES_H], [/* Define to 1 if <ncurses.h> is present */
+@%:@undef HAVE_NCURSES_H])
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_NCURSES])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_NCURSES$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_NCURSES], [/* Define to 1 if the Ncurses library is present */
+@%:@undef HAVE_NCURSES])
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_CURSES$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_CURSES], [/* Define to 1 if a SysV or X/Open compatible Curses library is present */
+@%:@undef HAVE_CURSES])
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_COLOR])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_CURSES_COLOR$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_CURSES_COLOR], [/* Define to 1 if library supports color (enhanced functions) */
+@%:@undef HAVE_CURSES_COLOR])
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_OBSOLETE])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_CURSES_OBSOLETE$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_CURSES_OBSOLETE], [/* Define to 1 if library supports certain obsolete features */
+@%:@undef HAVE_CURSES_OBSOLETE])
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_NCURSES_CURSES_H])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_NCURSES_CURSES_H$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_NCURSES_CURSES_H], [/* Define to 1 if <ncurses/curses.h> is present */
+@%:@undef HAVE_NCURSES_CURSES_H])
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_COLOR])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_CURSES_COLOR$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_CURSES_COLOR], [/* Define to 1 if library supports color (enhanced functions) */
+@%:@undef HAVE_CURSES_COLOR])
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_OBSOLETE])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_CURSES_OBSOLETE$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_CURSES_OBSOLETE], [/* Define to 1 if library supports certain obsolete features */
+@%:@undef HAVE_CURSES_OBSOLETE])
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_NCURSES_H])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_NCURSES_H$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_NCURSES_H], [/* Define to 1 if <ncurses.h> is present */
+@%:@undef HAVE_NCURSES_H])
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_CURSES$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_CURSES], [/* Define to 1 if a SysV or X/Open compatible Curses library is present */
+@%:@undef HAVE_CURSES])
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_H])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_CURSES_H$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_CURSES_H], [/* Define to 1 if <curses.h> is present */
+@%:@undef HAVE_CURSES_H])
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_ENHANCED])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_CURSES_ENHANCED$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_CURSES_ENHANCED], [/* Define to 1 if library supports X/Open Enhanced functions */
+@%:@undef HAVE_CURSES_ENHANCED])
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_COLOR])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_CURSES_COLOR$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_CURSES_COLOR], [/* Define to 1 if library supports color (enhanced functions) */
+@%:@undef HAVE_CURSES_COLOR])
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_COLOR])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_CURSES_COLOR$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_CURSES_COLOR], [/* Define to 1 if library supports color (enhanced functions) */
+@%:@undef HAVE_CURSES_COLOR])
+m4trace:configure.ac:36: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CURSES_OBSOLETE])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^HAVE_CURSES_OBSOLETE$])
+m4trace:configure.ac:36: -1- AH_OUTPUT([HAVE_CURSES_OBSOLETE], [/* Define to 1 if library supports certain obsolete features */
+@%:@undef HAVE_CURSES_OBSOLETE])
+m4trace:configure.ac:36: -1- AC_SUBST([CURSES_CFLAGS])
+m4trace:configure.ac:36: -1- AC_SUBST_TRACE([CURSES_CFLAGS])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^CURSES_CFLAGS$])
+m4trace:configure.ac:36: -1- AC_SUBST([CURSES_LIBS])
+m4trace:configure.ac:36: -1- AC_SUBST_TRACE([CURSES_LIBS])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^CURSES_LIBS$])
+m4trace:configure.ac:57: -1- AC_DEFINE_TRACE_LITERAL([IO_CURSES])
+m4trace:configure.ac:57: -1- m4_pattern_allow([^IO_CURSES$])
+m4trace:configure.ac:57: -1- AH_OUTPUT([IO_CURSES], [/* Define if using a curses implementation as the I/O system. */
 @%:@undef IO_CURSES])
-m4trace:configure.ac:22: -1- AC_SUBST([CURSES_CFLAGS])
-m4trace:configure.ac:22: -1- AC_SUBST_TRACE([CURSES_CFLAGS])
-m4trace:configure.ac:22: -1- m4_pattern_allow([^CURSES_CFLAGS$])
-m4trace:configure.ac:23: -1- AC_SUBST([CURSES_LIBS])
-m4trace:configure.ac:23: -1- AC_SUBST_TRACE([CURSES_LIBS])
-m4trace:configure.ac:23: -1- m4_pattern_allow([^CURSES_LIBS$])
-m4trace:configure.ac:25: -1- AC_DEFINE_TRACE_LITERAL([IO_STDIO])
-m4trace:configure.ac:25: -1- m4_pattern_allow([^IO_STDIO$])
-m4trace:configure.ac:25: -1- AH_OUTPUT([IO_STDIO], [/* Define if using stdio functions as the I/O system. */
+m4trace:configure.ac:58: -1- AC_SUBST([CURSES_CFLAGS])
+m4trace:configure.ac:58: -1- AC_SUBST_TRACE([CURSES_CFLAGS])
+m4trace:configure.ac:58: -1- m4_pattern_allow([^CURSES_CFLAGS$])
+m4trace:configure.ac:59: -1- AC_SUBST([CURSES_LIBS])
+m4trace:configure.ac:59: -1- AC_SUBST_TRACE([CURSES_LIBS])
+m4trace:configure.ac:59: -1- m4_pattern_allow([^CURSES_LIBS$])
+m4trace:configure.ac:61: -1- AC_DEFINE_TRACE_LITERAL([IO_STDIO])
+m4trace:configure.ac:61: -1- m4_pattern_allow([^IO_STDIO$])
+m4trace:configure.ac:61: -1- AH_OUTPUT([IO_STDIO], [/* Define if using stdio functions as the I/O system. */
 @%:@undef IO_STDIO])
-m4trace:configure.ac:28: -1- AC_CONFIG_HEADERS([config.h])
-m4trace:configure.ac:29: -1- AC_CONFIG_FILES([Makefile src/Makefile])
-m4trace:configure.ac:30: -1- AC_SUBST([LIB@&t@OBJS], [$ac_libobjs])
-m4trace:configure.ac:30: -1- AC_SUBST_TRACE([LIB@&t@OBJS])
-m4trace:configure.ac:30: -1- m4_pattern_allow([^LIB@&t@OBJS$])
-m4trace:configure.ac:30: -1- AC_SUBST([LTLIBOBJS], [$ac_ltlibobjs])
-m4trace:configure.ac:30: -1- AC_SUBST_TRACE([LTLIBOBJS])
-m4trace:configure.ac:30: -1- m4_pattern_allow([^LTLIBOBJS$])
-m4trace:configure.ac:30: -1- AM_CONDITIONAL([am__EXEEXT], [test -n "$EXEEXT"])
-m4trace:configure.ac:30: -1- AC_SUBST([am__EXEEXT_TRUE])
-m4trace:configure.ac:30: -1- AC_SUBST_TRACE([am__EXEEXT_TRUE])
-m4trace:configure.ac:30: -1- m4_pattern_allow([^am__EXEEXT_TRUE$])
-m4trace:configure.ac:30: -1- AC_SUBST([am__EXEEXT_FALSE])
-m4trace:configure.ac:30: -1- AC_SUBST_TRACE([am__EXEEXT_FALSE])
-m4trace:configure.ac:30: -1- m4_pattern_allow([^am__EXEEXT_FALSE$])
-m4trace:configure.ac:30: -1- _AM_SUBST_NOTMAKE([am__EXEEXT_TRUE])
-m4trace:configure.ac:30: -1- _AM_SUBST_NOTMAKE([am__EXEEXT_FALSE])
-m4trace:configure.ac:30: -1- AC_SUBST_TRACE([top_builddir])
-m4trace:configure.ac:30: -1- AC_SUBST_TRACE([top_build_prefix])
-m4trace:configure.ac:30: -1- AC_SUBST_TRACE([srcdir])
-m4trace:configure.ac:30: -1- AC_SUBST_TRACE([abs_srcdir])
-m4trace:configure.ac:30: -1- AC_SUBST_TRACE([top_srcdir])
-m4trace:configure.ac:30: -1- AC_SUBST_TRACE([abs_top_srcdir])
-m4trace:configure.ac:30: -1- AC_SUBST_TRACE([builddir])
-m4trace:configure.ac:30: -1- AC_SUBST_TRACE([abs_builddir])
-m4trace:configure.ac:30: -1- AC_SUBST_TRACE([abs_top_builddir])
-m4trace:configure.ac:30: -1- AC_SUBST_TRACE([INSTALL])
-m4trace:configure.ac:30: -1- AC_SUBST_TRACE([MKDIR_P])
+m4trace:configure.ac:64: -1- AC_CONFIG_HEADERS([config.h])
+m4trace:configure.ac:65: -1- AC_CONFIG_FILES([Makefile src/Makefile])
+m4trace:configure.ac:66: -1- AC_SUBST([LIB@&t@OBJS], [$ac_libobjs])
+m4trace:configure.ac:66: -1- AC_SUBST_TRACE([LIB@&t@OBJS])
+m4trace:configure.ac:66: -1- m4_pattern_allow([^LIB@&t@OBJS$])
+m4trace:configure.ac:66: -1- AC_SUBST([LTLIBOBJS], [$ac_ltlibobjs])
+m4trace:configure.ac:66: -1- AC_SUBST_TRACE([LTLIBOBJS])
+m4trace:configure.ac:66: -1- m4_pattern_allow([^LTLIBOBJS$])
+m4trace:configure.ac:66: -1- AM_CONDITIONAL([am__EXEEXT], [test -n "$EXEEXT"])
+m4trace:configure.ac:66: -1- AC_SUBST([am__EXEEXT_TRUE])
+m4trace:configure.ac:66: -1- AC_SUBST_TRACE([am__EXEEXT_TRUE])
+m4trace:configure.ac:66: -1- m4_pattern_allow([^am__EXEEXT_TRUE$])
+m4trace:configure.ac:66: -1- AC_SUBST([am__EXEEXT_FALSE])
+m4trace:configure.ac:66: -1- AC_SUBST_TRACE([am__EXEEXT_FALSE])
+m4trace:configure.ac:66: -1- m4_pattern_allow([^am__EXEEXT_FALSE$])
+m4trace:configure.ac:66: -1- _AM_SUBST_NOTMAKE([am__EXEEXT_TRUE])
+m4trace:configure.ac:66: -1- _AM_SUBST_NOTMAKE([am__EXEEXT_FALSE])
+m4trace:configure.ac:66: -1- AC_SUBST_TRACE([top_builddir])
+m4trace:configure.ac:66: -1- AC_SUBST_TRACE([top_build_prefix])
+m4trace:configure.ac:66: -1- AC_SUBST_TRACE([srcdir])
+m4trace:configure.ac:66: -1- AC_SUBST_TRACE([abs_srcdir])
+m4trace:configure.ac:66: -1- AC_SUBST_TRACE([top_srcdir])
+m4trace:configure.ac:66: -1- AC_SUBST_TRACE([abs_top_srcdir])
+m4trace:configure.ac:66: -1- AC_SUBST_TRACE([builddir])
+m4trace:configure.ac:66: -1- AC_SUBST_TRACE([abs_builddir])
+m4trace:configure.ac:66: -1- AC_SUBST_TRACE([abs_top_builddir])
+m4trace:configure.ac:66: -1- AC_SUBST_TRACE([INSTALL])
+m4trace:configure.ac:66: -1- AC_SUBST_TRACE([MKDIR_P])

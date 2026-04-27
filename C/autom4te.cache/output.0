@@ -714,7 +714,7 @@ ac_user_opts='
 enable_option_checking
 enable_silent_rules
 enable_dependency_tracking
-enable_io_curses
+with_curses
 '
       ac_precious_vars='build_alias
 host_alias
@@ -726,7 +726,9 @@ CC
 CFLAGS
 LDFLAGS
 LIBS
-CPPFLAGS'
+CPPFLAGS
+CURSES_CFLAGS
+CURSES_LIBS'
 
 
 # Initialize some variables set by options.
@@ -1356,7 +1358,12 @@ Optional Features:
                           do not reject slow dependency extractors
   --disable-dependency-tracking 
                           speeds up one-time build
-  --enable-io-curses      Use a curses implementation as the I/O system.
+
+Optional Packages:
+  --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
+  --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
+  --with-curses=TYPE      Choose curses backend: auto, ncurses, pdcurses, or
+                          system
 
 Some influential environment variables:
   PKG_CONFIG  path to pkg-config utility
@@ -1371,6 +1378,9 @@ Some influential environment variables:
   LIBS        libraries to pass to the linker, e.g. -l<library>
   CPPFLAGS    (Objective) C/C++ preprocessor flags, e.g. -I<include dir> if
               you have headers in a nonstandard directory <include dir>
+  CURSES_CFLAGS 
+              C compiler flags for CURSES, overriding pkg-config
+  CURSES_LIBS linker flags for CURSES, overriding pkg-config
 
 Use these variables to override the choices made by `configure' or to help
 it to find libraries and programs with nonstandard names/locations.
@@ -1491,6 +1501,53 @@ fi
   as_fn_set_status $ac_retval
 
 } @%:@ ac_fn_c_try_compile
+
+@%:@ ac_fn_c_try_link LINENO
+@%:@ -----------------------
+@%:@ Try to link conftest.@S|@ac_ext, and return whether this succeeded.
+ac_fn_c_try_link ()
+{
+  as_lineno=${as_lineno-"$1"} as_lineno_stack=as_lineno_stack=$as_lineno_stack
+  rm -f conftest.$ac_objext conftest.beam conftest$ac_exeext
+  if { { ac_try="$ac_link"
+case "(($ac_try" in
+  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
+  *) ac_try_echo=$ac_try;;
+esac
+eval ac_try_echo="\"\$as_me:${as_lineno-$LINENO}: $ac_try_echo\""
+printf "%s\n" "$ac_try_echo"; } >&5
+  (eval "$ac_link") 2>conftest.err
+  ac_status=$?
+  if test -s conftest.err; then
+    grep -v '^ *+' conftest.err >conftest.er1
+    cat conftest.er1 >&5
+    mv -f conftest.er1 conftest.err
+  fi
+  printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; } && {
+	 test -z "$ac_c_werror_flag" ||
+	 test ! -s conftest.err
+       } && test -s conftest$ac_exeext && {
+	 test "$cross_compiling" = yes ||
+	 test -x conftest$ac_exeext
+       }
+then :
+  ac_retval=0
+else $as_nop
+  printf "%s\n" "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+	ac_retval=1
+fi
+  # Delete the IPA/IPO (Inter Procedural Analysis/Optimization) information
+  # created by the PGI compiler (conftest_ipa8_conftest.oo), as it would
+  # interfere with the next link command; also delete a directory that is
+  # left behind by Apple's compiler.  We do this before executing the actions.
+  rm -rf conftest.dSYM conftest_ipa8_conftest.oo
+  eval $as_lineno_stack; ${as_lineno_stack:+:} unset as_lineno
+  as_fn_set_status $ac_retval
+
+} @%:@ ac_fn_c_try_link
 ac_configure_args_raw=
 for ac_arg
 do
@@ -4259,16 +4316,24 @@ fi
 
 
 
-@%:@ Check whether --enable-io-curses was given.
-if test ${enable_io_curses+y}
+
+@%:@ Check whether --with-curses was given.
+if test ${with_curses+y}
 then :
-  enableval=$enable_io_curses; 
+  withval=$with_curses; with_curses=$withval
 else $as_nop
-  enable_io_curses=no
+  with_curses=no
 fi
 
 
- if test "x$enable_io_curses" = "xyes"; then
+case $with_curses in @%:@(
+  no|auto|ncurses|pdcurses|system) :
+     ;; @%:@(
+  *) :
+    as_fn_error $? "invalid value for --with-curses: $with_curses" "$LINENO" 5 ;;
+esac
+
+ if test "x$with_curses" != "xno" -a "x$with_curses" != "x"; then
   IO_CURSES_TRUE=
   IO_CURSES_FALSE='#'
 else
@@ -4276,20 +4341,217 @@ else
   IO_CURSES_FALSE=
 fi
 
+# If you want a real boolean conditional instead, use a separate variable like use_curses=yes/no.
 
-if test "x$enable_io_curses" = "xyes"; then
-  AX_WITH_CURSES
-  if test "x$ax_cv_curses" != xyes
+curses_backend=
+CURSES_CFLAGS=
+CURSES_LIBS=
+
+case $with_curses in @%:@(
+  auto) :
+    
+    case $host_os in
+      mingw*|msys*|cygwin*)
+        with_curses=pdcurses
+        ;;
+      *)
+        with_curses=ncurses
+        ;;
+    esac
+   ;; @%:@(
+  *) :
+     ;;
+esac
+
+
+case $with_curses in @%:@(
+  ncurses) :
+    
+    AX_WITH_CURSES
+    if test "x$ax_cv_curses" != xyes
 then :
-  
-    as_fn_error $? "a curses library is required" "$LINENO" 5
-  
+  as_fn_error $? "ncurses requested but not found" "$LINENO" 5
+fi
+    curses_backend=ncurses
+   ;; @%:@(
+  system) :
+    
+    AX_WITH_CURSES
+    if test "x$ax_cv_plaincurses" != xyes
+then :
+  as_fn_error $? "system curses requested but not found" "$LINENO" 5
+fi
+    curses_backend=system
+   ;; @%:@(
+  pdcurses) :
+    
+    
+pkg_failed=no
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for pdcurses" >&5
+printf %s "checking for pdcurses... " >&6; }
+
+if test -n "$CURSES_CFLAGS"; then
+    pkg_cv_CURSES_CFLAGS="$CURSES_CFLAGS"
+ elif test -n "$PKG_CONFIG"; then
+    if test -n "$PKG_CONFIG" && \
+    { { printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"pdcurses\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "pdcurses") 2>&5
+  ac_status=$?
+  printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_CURSES_CFLAGS=`$PKG_CONFIG --cflags "pdcurses" 2>/dev/null`
+		      test "x$?" != "x0" && pkg_failed=yes 
+else
+  pkg_failed=yes
+fi
+ else
+    pkg_failed=untried
+fi
+if test -n "$CURSES_LIBS"; then
+    pkg_cv_CURSES_LIBS="$CURSES_LIBS"
+ elif test -n "$PKG_CONFIG"; then
+    if test -n "$PKG_CONFIG" && \
+    { { printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"pdcurses\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "pdcurses") 2>&5
+  ac_status=$?
+  printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_CURSES_LIBS=`$PKG_CONFIG --libs "pdcurses" 2>/dev/null`
+		      test "x$?" != "x0" && pkg_failed=yes 
+else
+  pkg_failed=yes
+fi
+ else
+    pkg_failed=untried
 fi
 
+
+
+if test $pkg_failed = yes; then
+        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
+printf "%s\n" "no" >&6; }
+        
+if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
+        _pkg_short_errors_supported=yes
+else
+        _pkg_short_errors_supported=no
+fi
+        if test $_pkg_short_errors_supported = yes; then
+                CURSES_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors --cflags --libs "pdcurses" 2>&1`
+        else
+                CURSES_PKG_ERRORS=`$PKG_CONFIG --print-errors --cflags --libs "pdcurses" 2>&1`
+        fi
+        # Put the nasty error message in config.log where it belongs
+        echo "$CURSES_PKG_ERRORS" >&5
+
+        
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for initscr in -lpdcurses" >&5
+printf %s "checking for initscr in -lpdcurses... " >&6; }
+if test ${ac_cv_lib_pdcurses_initscr+y}
+then :
+  printf %s "(cached) " >&6
+else $as_nop
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-lpdcurses  $LIBS"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+char initscr ();
+int
+main (void)
+{
+return initscr ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"
+then :
+  ac_cv_lib_pdcurses_initscr=yes
+else $as_nop
+  ac_cv_lib_pdcurses_initscr=no
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.beam \
+    conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_pdcurses_initscr" >&5
+printf "%s\n" "$ac_cv_lib_pdcurses_initscr" >&6; }
+if test "x$ac_cv_lib_pdcurses_initscr" = xyes
+then :
+  CURSES_LIBS="-lpdcurses"; curses_backend=pdcurses
+else $as_nop
+  as_fn_error $? "PDCurses requested but not found" "$LINENO" 5
+fi
+
+    
+elif test $pkg_failed = untried; then
+        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
+printf "%s\n" "no" >&6; }
+        
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for initscr in -lpdcurses" >&5
+printf %s "checking for initscr in -lpdcurses... " >&6; }
+if test ${ac_cv_lib_pdcurses_initscr+y}
+then :
+  printf %s "(cached) " >&6
+else $as_nop
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-lpdcurses  $LIBS"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+char initscr ();
+int
+main (void)
+{
+return initscr ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"
+then :
+  ac_cv_lib_pdcurses_initscr=yes
+else $as_nop
+  ac_cv_lib_pdcurses_initscr=no
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.beam \
+    conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_pdcurses_initscr" >&5
+printf "%s\n" "$ac_cv_lib_pdcurses_initscr" >&6; }
+if test "x$ac_cv_lib_pdcurses_initscr" = xyes
+then :
+  CURSES_LIBS="-lpdcurses"; curses_backend=pdcurses
+else $as_nop
+  as_fn_error $? "PDCurses requested but not found" "$LINENO" 5
+fi
+
+    
+else
+        CURSES_CFLAGS=$pkg_cv_CURSES_CFLAGS
+        CURSES_LIBS=$pkg_cv_CURSES_LIBS
+        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+printf "%s\n" "yes" >&6; }
+        
+      curses_backend=pdcurses
+    
+fi
+   ;; @%:@(
+  *) :
+     ;;
+esac
+if test "x$curses_backend" != x; then
   
 printf "%s\n" "@%:@define IO_CURSES 1" >>confdefs.h
 
-  
   
   
 else

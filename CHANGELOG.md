@@ -1,6 +1,8 @@
 ## [Unreleased] - 2026-XX-XX
 ### Changed
 - Changed the representation of tile values from one byte encoding powers of 2 over to unsigned 32 bit integers.  This makes code simpler and easier to understand.
+- Improved the build system to automatically select the best Curses implementation or allow the user to select their own when using Curses.
+- Fixed an incorrect message displayed when prompting for the next move in the stdio backend.
 
 ##[0.3.1] - 2026-04-22
 ### Added

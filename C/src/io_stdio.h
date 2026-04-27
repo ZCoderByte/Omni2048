@@ -112,11 +112,11 @@ void render_display(const state_t* const restrict state) {
     }
     printf("+-----------------------------------------+\n");
     
-    if (game_over(state->board)) {
-        printf("No more moves left.  Too bad.  You lose!\n\n");
-    }
-    else if (won_game(state->board)) {
+    if (won_game(state->highest_tile) && game_over(state->board)) {
         printf("Awesome.  You win!\n\n");
+    }
+    else if (game_over(state->board)) {
+        printf("No more moves left.  Too bad.  You lose!\n\n");
     }
     else {
     	printf("Next move (u/d/l/r/q): ");
