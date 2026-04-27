@@ -36,7 +36,7 @@ typedef struct state_struct state_t;
 
 state_t new_state();
 void create_tile(state_t* state);
-unsigned int game_over(const unsigned char board[4][4]);
+unsigned int game_over(const unsigned char (*board)[4]);
 void update_state(state_t* gamestate, unsigned int input);
 
 
@@ -116,7 +116,7 @@ void create_tile(state_t* state) {
 Check if any tiles can be moved at all.  Returns true if no more tile movement
 is possible (meaning the game has been lost).
 */
-unsigned int game_over(const unsigned char board[4][4]) {
+unsigned int game_over(const unsigned char (*board)[4]) {
     // First checking if any tiles are zero (open spaces).
     if (count_empty_tiles(board)) {
     	return 0;
