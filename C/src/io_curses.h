@@ -103,8 +103,11 @@ Uses the text attribute A_BOLD to brighten a color.
 */
 void set_tile_color(unsigned int tile) {
 	if (has_colors()) {
-		int text_attribute = (tile % 2) ? A_NORMAL : A_BOLD;
-		attrset(COLOR_PAIR((tile + 1) / 2) | text_attribute);
+		unsigned int highest_bit;
+		for (highest_bit = 0; tile >= (1 << highest_bit); highest_bit++) {}
+		int text_attribute = (highest_bit + 1) % 2 ? A_NORMAL : A_BOLD;
+		attrset(COLOR_PAIR(highest_bit / 2) | text_attribute);
+		
 	}
 }
 
@@ -149,7 +152,7 @@ void draw_tile_outline(unsigned int y, unsigned int x) {
 }
 
 
-void draw_tile(unsigned int tile, unsigned int frame,
+void draw_tile(unsigned long tile, unsigned int frame,
                      unsigned int direction, unsigned int y, unsigned int x) {
 	if (tile == 0) {
 		return;
@@ -162,11 +165,11 @@ void draw_tile(unsigned int tile, unsigned int frame,
 	draw_tile_outline(draw_y, draw_x);
 	
 	move(draw_y + 2, draw_x + 1);
-	if (tile < 7) {
-		printw("%4u  ", 1 << tile);
+	if (tile < 100) {
+		printw("%4lu  ", tile);
 	}
 	else {
-		printw("%5u ", 1 << tile);
+		printw("%5lu ", tile);
 	}
 	
 	attrset(A_NORMAL);

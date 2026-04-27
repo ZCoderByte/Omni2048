@@ -36,7 +36,7 @@ unsigned int get_input() {
 }
 
 
-void draw_row(const unsigned char row[4]) {
+void draw_row(const unsigned long row[4]) {
 	
 	printf("| ");
 	for (unsigned int x = 0; x < 4; x++) {
@@ -61,20 +61,14 @@ void draw_row(const unsigned char row[4]) {
 		if (!row[x]) {
 			printf("          ");
 		}
-		else if (row[x] < 7) {
-			printf("|  %2u   | ", 2 << (row[x] - 1));
+		else if (row[x] < 100) {
+			printf("|  %2lu   | ", row[x]);
 		}
-		else if (row[x] < 10) {
-			printf("|  %3u  | ", 2 << (row[x] - 1));
-		}
-		else if (row[x] < 14) {
-			printf("| %4u  | ", 2 << (row[x] - 1));
-		}
-		else if (row[x] < 17) {
-			printf("| %5u | ", 2 << (row[x] - 1));
+		else if (row[x] < 10000) {
+			printf("| %4lu  | ", row[x]);
 		}
 		else {
-			printf("|%6u | ", 2 << (row[x] - 1));
+			printf("|%6lu | ", row[x]);
 		}
 	}
 	printf("|\n| ");
