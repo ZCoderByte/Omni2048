@@ -21,7 +21,7 @@ This is a simple input/output backend for 2048 that uses stdio.
 typedef unsigned int display_t;
 #define NEW_DISPLAY 0
 
-#define updating_display(display) 0
+#define updating_display(display) (0)
 
 /* Dummy macros, but some other io backends have and use these functions. */
 #define init_io()
@@ -95,11 +95,8 @@ void draw_row(const unsigned long row[4]) {
 
 /* This um... updates the display every time a move is made. */
 void render_display(const state_t* const restrict state) {
-	/*if (state->should_create_tile || state->move_flags) {
-		return;
-	}*/
 	
-	printf("\n\nScore: %lu, Highest Tile: %u\n", state->score, 2 << (state->highest_tile - 1));
+	printf("\n\nScore: %lu, Highest Tile: %lu\n", state->score, state->highest_tile);
     printf("+-----------------------------------------+\n");
     for (unsigned int y = 0; y < 4; y++) {
     	draw_row(state->board[y]);

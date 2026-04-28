@@ -12,30 +12,38 @@
 #define DIRECTION_RIGHT 4
 
 
-struct state_struct {
+typedef struct {
+    unsigned int y;
+    unsigned int x;
+} point;
+
+/* Bit vectors used to denote which tiles move at a given movement stage. */
+typedef struct {
+    unsigned int move;
+    unsigned int merge;
+} flags_t;
+
+typedef struct {
 	unsigned long board[4][4];
 	unsigned long score;
-	unsigned long delta_score;
 	unsigned long highest_tile;
-	/* Bit vectors used to denote which tiles move at a given movement stage. */
-	unsigned int move_flags;
-	unsigned int merge_flags;
+	flags_t flags;
 	unsigned char direction;
 	unsigned char should_create_tile;
-};
-typedef struct state_struct state_t;
+} state_t;
 
 #define get_flag(flags, y, x) (((flags) >> ((y) * 4 + (x))) & 1)
 #define set_flag(flags, y, x) ((flags) | (1 << ((y) * 4 + (x))))
 
-#define updating_state(state) ((state.should_create_tile) || (state.move_flags))
+#define updating_state(state) ((state.should_create_tile) || (state.flags.move))
 
-#define highest_value(value_1, value_2) (((unsigned long)(value_1) > (unsigned long)(value_2)) ? (unsigned long)(value_1) : (unsigned long)(value_2))
+#define max(a, b) ((a) ^ (((a) ^ (b)) & -((a) < (b))))
 
 #define won_game(highest_tile) ((highest_tile) >= 2048)
 
 state_t new_state();
-void create_tile(state_t* state);
+void create_tile(unsigned long (*board)[4]);
+unsigned long get_highest_tile(const unsigned long (*board)[4]);
 unsigned int game_over(const unsigned long (*board)[4]);
 void update_state(state_t* gamestate, unsigned int input);
 
@@ -62,18 +70,18 @@ state_t new_state() {
     			  {0, 0, 0, 0}},
     	.score = 0,
     	.highest_tile = 0,
-    	.move_flags = 0,
-    	.merge_flags = 0,
+    	.flags = {0, 0},
     	.direction = 0,
     	.should_create_tile = 0
     };
-	create_tile(&state);
-	create_tile(&state);
+	create_tile(state.board);
+	create_tile(state.board);
+	state.highest_tile = get_highest_tile(state.board);
 	return state;
 }
 
 
-unsigned int count_empty_tiles(const unsigned long board[4][4]) {
+unsigned int count_empty_tiles(const unsigned long (*board)[4]) {
     unsigned int empty_tiles = 0;
     for (unsigned int y = 0; y < 4; y++) {
         for (unsigned int x = 0; x < 4; x++) {
@@ -86,17 +94,28 @@ unsigned int count_empty_tiles(const unsigned long board[4][4]) {
 }
 
 
+unsigned long get_highest_tile(const unsigned long (*board)[4]) {
+	unsigned long highest_tile = 0;
+	for (unsigned int y = 0; y < 4; y++) {
+        for (unsigned int x = 0; x < 4; x++) {
+            highest_tile = max(highest_tile, board[y][x]);
+        }
+    }
+    return highest_tile;
+}
+
+
 /*
 Randomely creates a tile with the value 2 or 4 on an open position on the board.
 */
-void create_tile(state_t* state) {
-    unsigned int counter = (rand() % count_empty_tiles(state->board)) + 1;
+void create_tile(unsigned long (*board)[4]) {
+    unsigned int counter = (rand() % count_empty_tiles(board)) + 1;
     unsigned char new_tile = ((rand() % 2) + 1) * 2;
     unsigned int y = 0, x = 0;
     
     for (y = 0;; y = (y + 1) % 4) {
         for (x = 0; x < 4; x++) {
-            if (state->board[y][x] == 0) {
+            if (board[y][x] == 0) {
                 counter--;
             }
             if (counter == 0) {
@@ -107,8 +126,7 @@ void create_tile(state_t* state) {
             break;
         }
     }
-    state->board[y][x] = new_tile;
-    state->highest_tile = highest_value(state->highest_tile, new_tile);
+    board[y][x] = new_tile;
 }
 
 
@@ -145,39 +163,39 @@ unsigned int game_over(const unsigned long (*board)[4]) {
 
 
 /*
-Checks if it's possible to move a tile from position (src_x, src_y) to
-(dest_x, dest_y).  Returns a nonzero value if the tile at (src_x, src_y) is
-nonzero and the tile at (dest_x, dest_y) is zero.  Otherwise returns zero.
+Checks if it's possible to move a tile from position (src.x, src.y) to
+(dest.x, dest.y).  Returns a nonzero value if the tile at (src.x, src.y) is
+nonzero and the tile at (dest.x, dest.y) is zero.  Otherwise returns zero.
 */
-unsigned int can_move_tile(state_t* restrict state, const unsigned int src_y,
-				const unsigned int src_x, const unsigned int dest_y, const unsigned int dest_x) {
+unsigned int can_move_tile(const unsigned long (*board)[4],
+	const flags_t flags, const point src, const point dest) {
 
-	const unsigned int src_tile  = state->board[src_y][src_x];
-	const unsigned int dest_tile = state->board[dest_y][dest_x];
+	const unsigned int src_tile  = board[src.y][src.x];
+	const unsigned int dest_tile = board[dest.y][dest.x];
 
-	if (((dest_tile == 0) || get_flag(state->move_flags, dest_y, dest_x))
-		&& (src_tile != 0) && !get_flag(state->merge_flags, dest_y, dest_x)
-		&& !get_flag(state->merge_flags, src_y, src_x)) {
-		return set_flag(0, src_y, src_x);
+	if (((dest_tile == 0) || get_flag(flags.move, dest.y, dest.x))
+		&& (src_tile != 0) && !get_flag(flags.merge, dest.y, dest.x)
+		&& !get_flag(flags.merge, src.y, src.x)) {
+		return set_flag(0, src.y, src.x);
     }
     return 0;
 }
 
 
 /*
-Checks if it's possible to merge tiles from position (src_x, src_y) and
-(dest_x, dest_y) to produce a tile with double the value.  Returns a nonzero
+Checks if it's possible to merge tiles from position (src.x, src.y) and
+(dest.x, dest.y) to produce a tile with double the value.  Returns a nonzero
 value if tiles can be merged, otherwise returns 0.
 */
-unsigned long can_merge_tiles(state_t* restrict state, const unsigned int src_y, const unsigned int src_x,
-                       const unsigned int dest_y, const unsigned int dest_x) {
+unsigned long can_merge_tiles(const unsigned long (*board)[4],
+	const unsigned int merge_flags, const point src, const point dest) {
 	
-	const unsigned int src_tile  = state->board[src_y][src_x];
-	const unsigned int dest_tile = state->board[dest_y][dest_x];
+	const unsigned int src_tile  = board[src.y][src.x];
+	const unsigned int dest_tile = board[dest.y][dest.x];
 	
 	if ((src_tile != 0) && (src_tile == dest_tile) &&
-		!get_flag(state->merge_flags, dest_y, dest_x) &&
-		!get_flag(state->merge_flags, src_y, src_x)) {
+		!get_flag(merge_flags, dest.y, dest.x) &&
+		!get_flag(merge_flags, src.y, src.x)) {
 		return 2 << dest_tile;
 	}
 	return 0;
@@ -187,19 +205,17 @@ unsigned long can_merge_tiles(state_t* restrict state, const unsigned int src_y,
 /*
 
 */
-void set_next_flag(state_t* restrict state, const unsigned int src_y, const unsigned int src_x,
-                       const unsigned int dest_y, const unsigned int dest_x) {
+void set_next_flag(state_t* restrict state, const point src, const point dest) {
 	
-	if (get_flag(state->merge_flags, dest_y, dest_x)) {
+	if (get_flag(state->flags.merge, dest.y, dest.x)) {
 		return;
 	}
-	else if (can_move_tile(state, src_y, src_x, dest_y, dest_x)) {
-		state->move_flags = set_flag(state->move_flags, src_y, src_x);
+	else if (can_move_tile(state->board, state->flags, src, dest)) {
+		state->flags.move = set_flag(state->flags.move, src.y, src.x);
 	}
-	else if (can_merge_tiles(state, src_y, src_x, dest_y, dest_x)) {
-		state->merge_flags = set_flag(state->merge_flags, dest_y, dest_x);
-		state->delta_score += can_merge_tiles(state, src_y, src_x, dest_y, dest_x);
-		state->move_flags = set_flag(state->move_flags, src_y, src_x);
+	else if (can_merge_tiles(state->board, state->flags.merge, src, dest)) {
+		state->flags.merge = set_flag(state->flags.merge, dest.y, dest.x);
+		state->flags.move = set_flag(state->flags.move, src.y, src.x);
 	}
 }
 
@@ -210,7 +226,7 @@ Moves all tiles up.  Combines ajacent matching tiles.
 void set_flags_move_up(state_t* restrict state) {
     for (unsigned int x = 0; x < 4; x++) {
         for (unsigned int y = 0; y < 3; y++) {
-        	set_next_flag(state, y + 1, x, y, x);
+        	set_next_flag(state, (point){y + 1, x}, (point){y, x});
         }
     }
 }
@@ -222,7 +238,7 @@ Moves all tiles down.  Combines ajacent matching tiles.
 void set_flags_move_down(state_t* restrict state) {
     for (unsigned int x = 0; x < 4; x++) {
         for (unsigned int y = 3; y > 0; y--) {
-            set_next_flag(state, y - 1, x, y, x);
+            set_next_flag(state, (point){y - 1, x}, (point){y, x});
         }
     }
 }
@@ -234,7 +250,7 @@ Moves all tiles right.  Combines ajacent matching tiles.
 void set_flags_move_right(state_t* restrict state) {
     for (unsigned int y = 0; y < 4; y++) {
         for (unsigned int x = 3; x > 0; x--) {
-			set_next_flag(state, y, x - 1, y, x);
+			set_next_flag(state, (point){y, x - 1}, (point){y, x});
         }
     }
 }
@@ -246,7 +262,7 @@ Moves all tiles left.  Combines ajacent matching tiles.
 void set_flags_move_left(state_t* restrict state) {
     for (unsigned int y = 0; y < 4; y++) {
         for (unsigned int x = 0; x < 3; x++) {
-			set_next_flag(state, y, x + 1, y, x);
+			set_next_flag(state, (point){y, x + 1}, (point){y, x});
         }
     }
 }
@@ -269,92 +285,85 @@ void get_next_moves(state_t* restrict state) {
 }
 
 
-void update_board_up(state_t* restrict state) {
+unsigned long move_next_tile(unsigned long (*board)[4], const flags_t flags,
+	const point src, const point dest) {
+	
+	if (get_flag(flags.merge, dest.y, dest.x) && get_flag(flags.move, src.y, src.x)) {
+        board[dest.y][dest.x] += board[src.y][src.x];
+        board[src.y][src.x] = 0;
+        return board[dest.y][dest.x];
+    }
+    else if ((board[dest.y][dest.x] == 0) && get_flag(flags.move, src.y, src.x)) {
+        board[dest.y][dest.x] = board[src.y][src.x];
+        board[src.y][src.x] = 0;
+    }
+    return 0;
+}
+
+
+unsigned long update_board_up(unsigned long (*board)[4], const flags_t flags) {
+    unsigned long delta_score = 0;
     for (unsigned int x = 0; x < 4; x++) {
         for (unsigned int y = 0; y < 3; y++) {
-        	if (get_flag(state->merge_flags, y, x) && get_flag(state->move_flags, y + 1, x)) {
-        		state->board[y][x] += state->board[y + 1][x];
-        		state->board[y + 1][x] = 0;
-        		state->highest_tile = highest_value(state->highest_tile, (state->board[y][x]));
-        		state->score += state->board[y][x];
-        	}
-        	else if ((state->board[y][x] == 0) && get_flag(state->move_flags, y + 1, x)) {
-        		state->board[y][x] = state->board[y + 1][x];
-        		state->board[y + 1][x] = 0;
-        	}
+        	delta_score += move_next_tile(board, flags,
+        		(point){y + 1, x}, (point){y, x});
         }
     }
+    return delta_score;
 }
 
 
-void update_board_down(state_t* restrict state) {
+unsigned long update_board_down(unsigned long (*board)[4], const flags_t flags) {
+    unsigned long delta_score = 0;
     for (unsigned int x = 0; x < 4; x++) {
         for (unsigned int y = 3; y > 0; y--) {
-        	if (get_flag(state->merge_flags, y, x) && get_flag(state->move_flags, y - 1, x)) {
-        		state->board[y][x] += state->board[y - 1][x];
-        		state->board[y - 1][x] = 0;
-        		state->highest_tile = highest_value(state->highest_tile, (state->board[y][x]));
-        		state->score += state->board[y][x];
-        	}
-        	else if ((state->board[y][x] == 0) && get_flag(state->move_flags, y - 1, x)) {
-        		state->board[y][x] = state->board[y - 1][x];
-        		state->board[y - 1][x] = 0;
-        	}
+        	delta_score += move_next_tile(board, flags,
+        		(point){y - 1, x}, (point){y, x});
         }
     }
+    return delta_score;
 }
 
 
-void update_board_right(state_t* restrict state) {
+unsigned long update_board_right(unsigned long (*board)[4], const flags_t flags) {
+    unsigned long delta_score = 0;
     for (unsigned int y = 0; y < 4; y++) {
         for (unsigned int x = 3; x > 0; x--) {
-        	if (get_flag(state->merge_flags, y, x) && get_flag(state->move_flags, y, x - 1)) {
-        		state->board[y][x] += state->board[y][x - 1];
-        		state->board[y][x - 1] = 0;
-        		state->highest_tile = highest_value(state->highest_tile, (state->board[y][x]));
-        		state->score += state->board[y][x];
-        	}
-        	else if ((state->board[y][x] == 0) && get_flag(state->move_flags, y, x - 1)) {
-        		state->board[y][x] = state->board[y][x - 1];
-        		state->board[y][x - 1] = 0;
-        	}
+        	delta_score += move_next_tile(board, flags,
+        		(point){y, x - 1}, (point){y, x});
         }
     }
+    return delta_score;
 }
 
 
-void update_board_left(state_t* restrict state) {
+unsigned long update_board_left(unsigned long (*board)[4], const flags_t flags) {
+    unsigned long delta_score = 0;
     for (unsigned int y = 0; y < 4; y++) {
         for (unsigned int x = 0; x < 3; x++) {
-        	if (get_flag(state->merge_flags, y, x) && get_flag(state->move_flags, y, x + 1)) {
-        		state->board[y][x] += state->board[y][x + 1];
-        		state->board[y][x + 1] = 0;
-        		state->highest_tile = highest_value(state->highest_tile, (state->board[y][x]));
-        		state->score += state->board[y][x];
-        	}
-        	else if ((state->board[y][x] == 0) && get_flag(state->move_flags, y, x + 1)) {
-        		state->board[y][x] = state->board[y][x + 1];
-        		state->board[y][x + 1] = 0;
-        	}
+        	delta_score += move_next_tile(board, flags,
+        		(point){y, x + 1}, (point){y, x});
         }
     }
+    return delta_score;
 }
 
 
-void update_board(state_t* restrict state) {
-	switch (state->direction) {
+unsigned long update_board(unsigned long (*board)[4], const flags_t flags, const unsigned int direction) {
+	switch (direction) {
 		case DIRECTION_UP:
-			update_board_up(state);
+			return update_board_up(board, flags);
 			break;
 		case DIRECTION_DOWN:
-			update_board_down(state);
+			return update_board_down(board, flags);
 			break;
 		case DIRECTION_LEFT:
-			update_board_left(state);
+			return update_board_left(board, flags);
 			break;
 		case DIRECTION_RIGHT:
-			update_board_right(state);
+			return update_board_right(board, flags);
 	}
+	return 0;
 }
 
 
@@ -379,23 +388,23 @@ unsigned int get_direction(unsigned int input) {
 
 /*
 Um... this updates the game state!
+
 */
 void update_state(state_t* restrict state, unsigned int input) {
-    if (state->move_flags) {
-		update_board(state);
-		state->delta_score = 0;
-		state->move_flags = 0;
+    if (state->flags.move) {
+		state->score += update_board(state->board, state->flags, state->direction);
+		state->flags.move = 0;
 		get_next_moves(state);
     }
     else if (state->should_create_tile) {
-        create_tile(state);
+        create_tile(state->board);
         state->should_create_tile = 0;
-        state->merge_flags = 0;
+        state->flags.merge = 0;
     }
     else {
     	state->direction = get_direction(input);
     	get_next_moves(state);
-    	if (state->move_flags) {
+    	if (state->flags.move) {
     		state->should_create_tile = 1;
     	}
     }
