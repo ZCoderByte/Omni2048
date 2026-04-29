@@ -30,9 +30,19 @@ typedef unsigned int display_t;
 
 /* Reads key input.  Filters out whitespace and EOF. */
 unsigned int get_input() {
-    int c;
-    for (c = getchar(); !strchr("udlrq", tolower(c)); c = getchar()) {}
-    return tolower(c);
+    switch (tolower(getchar())) {
+        case 'u':
+            return MOVE_UP;
+        case 'd':
+            return MOVE_DOWN;
+        case 'l':
+            return MOVE_LEFT;
+        case 'r':
+            return MOVE_RIGHT;
+        case 'q':
+            return MOVE_QUIT;
+    }
+    return MOVE_OTHER;
 }
 
 

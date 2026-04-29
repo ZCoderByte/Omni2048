@@ -5,11 +5,12 @@
 #include <stdint.h>
 
 
-#define DIRECTION_NONE 0
-#define DIRECTION_UP 1
-#define DIRECTION_DOWN 2
-#define DIRECTION_LEFT 3
-#define DIRECTION_RIGHT 4
+#define MOVE_OTHER 0
+#define MOVE_UP 1
+#define MOVE_DOWN 2
+#define MOVE_LEFT 3
+#define MOVE_RIGHT 4
+#define MOVE_QUIT 5
 
 
 typedef struct {
@@ -28,7 +29,7 @@ typedef struct {
 	unsigned long score;
 	unsigned long highest_tile;
 	flags_t flags;
-	unsigned char direction;
+	unsigned char next_move;
 	unsigned char should_create_tile;
 } state_t;
 
@@ -45,7 +46,7 @@ state_t new_state();
 void create_tile(unsigned long (*board)[4]);
 unsigned long get_highest_tile(const unsigned long (*board)[4]);
 unsigned int game_over(const unsigned long (*board)[4]);
-void update_state(state_t* gamestate, unsigned int input);
+void update_state(state_t* gamestate);
 
 
 #ifdef HAVE_CONFIG_H
@@ -71,7 +72,7 @@ state_t new_state() {
     	.score = 0,
     	.highest_tile = 0,
     	.flags = {0, 0},
-    	.direction = 0,
+    	.next_move = 0,
     	.should_create_tile = 0
     };
 	create_tile(state.board);
@@ -269,17 +270,17 @@ void set_flags_move_left(state_t* restrict state) {
 
 
 void get_next_moves(state_t* restrict state) {
-	switch (state->direction) {
-		case DIRECTION_UP:
+	switch (state->next_move) {
+		case MOVE_UP:
 			set_flags_move_up(state);
 			break;
-		case DIRECTION_DOWN:
+		case MOVE_DOWN:
 			set_flags_move_down(state);
 			break;
-		case DIRECTION_LEFT:
+		case MOVE_LEFT:
 			set_flags_move_left(state);
 			break;
-		case DIRECTION_RIGHT:
+		case MOVE_RIGHT:
 			set_flags_move_right(state);
 	}
 }
@@ -349,38 +350,16 @@ unsigned long update_board_left(unsigned long (*board)[4], const flags_t flags) 
 }
 
 
-unsigned long update_board(unsigned long (*board)[4], const flags_t flags, const unsigned int direction) {
-	switch (direction) {
-		case DIRECTION_UP:
+unsigned long update_board(unsigned long (*board)[4], const flags_t flags, const unsigned int next_move) {
+	switch (next_move) {
+		case MOVE_UP:
 			return update_board_up(board, flags);
-			break;
-		case DIRECTION_DOWN:
+		case MOVE_DOWN:
 			return update_board_down(board, flags);
-			break;
-		case DIRECTION_LEFT:
+		case MOVE_LEFT:
 			return update_board_left(board, flags);
-			break;
-		case DIRECTION_RIGHT:
+		case MOVE_RIGHT:
 			return update_board_right(board, flags);
-	}
-	return 0;
-}
-
-
-/*
-Determines the direction of tile movement based on player input.
-Returns the direction if player inputted a direction move, otherwise returns 0.
-*/
-unsigned int get_direction(unsigned int input) {
-	switch (input) {
-		case INPUT_UP:
-			return DIRECTION_UP;
-		case INPUT_DOWN:
-			return DIRECTION_DOWN;
-		case INPUT_LEFT:
-			return DIRECTION_LEFT;
-		case INPUT_RIGHT:
-			return DIRECTION_RIGHT;
 	}
 	return 0;
 }
@@ -390,9 +369,9 @@ unsigned int get_direction(unsigned int input) {
 Um... this updates the game state!
 
 */
-void update_state(state_t* restrict state, unsigned int input) {
+void update_state(state_t* restrict state) {
     if (state->flags.move) {
-		state->score += update_board(state->board, state->flags, state->direction);
+		state->score += update_board(state->board, state->flags, state->next_move);
 		state->flags.move = 0;
 		get_next_moves(state);
     }
@@ -402,7 +381,6 @@ void update_state(state_t* restrict state, unsigned int input) {
         state->flags.merge = 0;
     }
     else {
-    	state->direction = get_direction(input);
     	get_next_moves(state);
     	if (state->flags.move) {
     		state->should_create_tile = 1;

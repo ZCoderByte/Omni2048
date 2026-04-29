@@ -10,21 +10,20 @@ int main() {
     state_t state = new_state();
     display_t display = NEW_DISPLAY;
 	init_io();
-	unsigned int input = 0;
 	
     render_display(&state, &display);
     
     do {
     	if (!updating_state(state) && !updating_display(display)) {
-        	input = get_input();
+        	state.next_move = get_input();
         }
         if (!updating_display(display)) {
-        	update_state(&state, input);
+        	update_state(&state);
         }
         render_display(&state, &display);
-    } while (!game_over(state.board) && (input != INPUT_QUIT));
+    } while (!game_over(state.board) && (state.next_move != MOVE_QUIT));
     
-    if (input != INPUT_QUIT) {
+    if (state.next_move != MOVE_QUIT) {
     	get_input();
     }
     

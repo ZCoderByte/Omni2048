@@ -72,29 +72,24 @@ Reads key input.  Filters out whitespace and EOF.
 */
 unsigned int get_input() {
 	flushinp();
-        switch (getch()) {
-            case 'w':
-            case 'W':
-            case KEY_UP:
-                return INPUT_UP;
-            case 's':
-            case 'S':
-            case KEY_DOWN:
-                return INPUT_DOWN;
-            case 'a':
-            case 'A':
-            case KEY_LEFT:
-                return INPUT_LEFT;
-            case 'd':
-            case 'D':
-            case KEY_RIGHT:
-                return INPUT_RIGHT;
-            case 'q':
-            case 'Q':
-            case 27:  /* Esc Key */
-                return INPUT_QUIT;
-        }
-    return INPUT_OTHER;
+    switch (tolower(getch())) {
+        case 'w':
+        case KEY_UP:
+            return MOVE_UP;
+        case 's':
+        case KEY_DOWN:
+            return MOVE_DOWN;
+        case 'a':
+        case KEY_LEFT:
+            return MOVE_LEFT;
+        case 'd':
+        case KEY_RIGHT:
+            return MOVE_RIGHT;
+        case 'q':
+        case 27:  /* Esc Key */
+            return MOVE_QUIT;
+    }
+    return MOVE_OTHER;
 }
 
 /*
@@ -104,8 +99,8 @@ Uses the text attribute A_BOLD to brighten a color.
 void set_tile_color(unsigned int tile) {
 	if (has_colors()) {
 		unsigned int highest_bit;
-		for (highest_bit = 0; tile >= (1 << highest_bit); highest_bit++) {}
-		int text_attribute = (highest_bit + 1) % 2 ? A_NORMAL : A_BOLD;
+		for (highest_bit = 0; tile >= (1U << highest_bit); highest_bit++) {}
+		unsigned int text_attribute = (highest_bit + 1) % 2 ? A_NORMAL : A_BOLD;
 		attrset(COLOR_PAIR(highest_bit / 2) | text_attribute);
 		
 	}
@@ -113,13 +108,13 @@ void set_tile_color(unsigned int tile) {
 
 
 unsigned int get_draw_y(unsigned int y, unsigned int frame,
-						unsigned int direction) {
+						unsigned int next_move) {
 	unsigned int draw_y = (y * 5) + ((getmaxy(stdscr) - 22) / 5) + 2;
-	switch (direction) {
-		case DIRECTION_UP:
+	switch (next_move) {
+		case MOVE_UP:
 			draw_y -= frame;
 			break;
-		case DIRECTION_DOWN:
+		case MOVE_DOWN:
 			draw_y += frame;
 	}
 	return draw_y;
@@ -127,13 +122,13 @@ unsigned int get_draw_y(unsigned int y, unsigned int frame,
 
 
 unsigned int get_draw_x(unsigned int x, unsigned int frame,
-						unsigned int direction) {
+						unsigned int next_move) {
 	unsigned int draw_x = (x * 10) + ((getmaxx(stdscr) - 42) / 2) + 1;
-	switch (direction) {
-		case DIRECTION_LEFT:
+	switch (next_move) {
+		case MOVE_LEFT:
 			draw_x -= frame;
 			break;
-		case DIRECTION_RIGHT:
+		case MOVE_RIGHT:
 			draw_x += frame;
 	}
 	return draw_x;
@@ -153,13 +148,13 @@ void draw_tile_outline(unsigned int y, unsigned int x) {
 
 
 void draw_tile(unsigned long tile, unsigned int frame,
-                     unsigned int direction, unsigned int y, unsigned int x) {
+                     unsigned int next_move, unsigned int y, unsigned int x) {
 	if (tile == 0) {
 		return;
 	}
 	
-	unsigned int draw_y = get_draw_y(y, frame, direction);
-	unsigned int draw_x = get_draw_x(x, frame, direction);
+	unsigned int draw_y = get_draw_y(y, frame, next_move);
+	unsigned int draw_x = get_draw_x(x, frame, next_move);
 	
 	set_tile_color(tile);
 	draw_tile_outline(draw_y, draw_x);
@@ -202,7 +197,7 @@ void draw_board(const state_t* const restrict state, unsigned int frame) {
 	for (unsigned int i = 0; i < 16; i++) {
 		unsigned int y = i / 4, x = i % 4;
 		unsigned int tile = state->board[i / 4][i % 4];
-		unsigned int working_direction = get_flag(state->move_flags, y, x) ? state->direction : DIRECTION_NONE;
+		unsigned int working_direction = get_flag(state->flags.move, y, x) ? state->next_move : MOVE_OTHER;
 		draw_tile(tile, frame, working_direction, y, x);
 	}
 }
@@ -261,8 +256,8 @@ This um... updates the display every time a move is made.
 */
 void render_display(const state_t* const restrict state, display_t* restrict display) {
 	
-	if (state->move_flags && (display->frames == 0)) {
-		switch (state->direction) {
+	if (state->flags.move && (display->frames == 0)) {
+		switch (state->next_move) {
 			case INPUT_UP:
 			case INPUT_DOWN:
 				display->total_frames = 5;
